@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
+from .models import *
 
 
 def index(request):
-    return HttpResponse(f'<h2>Это страница главная</h2>')#render(request, 'index.html')
+    posts = Barber.objects.all()
+    return render(request, 'barber/index.html', {'posts': posts})
+
+def about(request):
+    return render(request, 'barber/about.html')
 
 
 def category(request, catid):
