@@ -3,9 +3,12 @@
 
 {%  block content %}
 <h2>Лист главной страницы</h2>
-<a href="/about">Здесь все о нас</a>
+<a href="{%  url 'about' %}">Здесь все о нас</a>
     {% for i in posts %}
     <p>{{ i.title}}</p>
     <p>{{ i.content }}</p>
+        <div class="clear"></div>
+			<p class="link-read-post"><a href="{% url 'post' i.pk %}">Читать статью</a></p>
+
     {% endfor %}
 {%  endblock %}
