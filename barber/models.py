@@ -13,9 +13,12 @@ class Barber(models.Model):
 
     def __str__(self):
         return self.title
-#  динамические адреса меняем здесь {self.??}
-    def get_absolut_url(self):
+#  динамические адреса получаем здесь обращаясь через метод() к слварю с меняющимся {self.??}
+    def get_absolute_url(self):
         return reverse('post', kwargs={'post_id': self.pk})
+
+    class Meta:
+        ordering = ['time_create', 'title'] # сортровка по времени созданияи по названию
 
 
 class Category(models.Model):
@@ -23,3 +26,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'cat_id': self.pk})

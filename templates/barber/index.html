@@ -5,10 +5,16 @@
 <h2>Лист главной страницы</h2>
 <a href="{%  url 'about' %}">Здесь все о нас</a>
     {% for i in posts %}
+        <li><div class="article-panel">
+         <p class="first">Категория: {{i.cat.name}}</p>
+        </div>
+        {% if i.photo %}
+         <p><img class="img-article-left thumb" src="{{i.photo.url}}"></p>
+        {% endif %}
     <p>{{ i.title}}</p>
     <p>{{ i.content|truncatewords:20 }}</p> <!--обрубил текст -->
         <div class="clear"></div>
-			<p class="link-read-post"><a href="{{  i.get_absolut_url }}">Читать весь пост</a></p>
+			<p class="link-read-post"><a href="{{ i.get_absolute_url }}">Читать весь пост</a></p>
 
     {% endfor %}
 {%  endblock %}

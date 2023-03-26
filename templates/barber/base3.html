@@ -31,9 +31,23 @@
 <!-- Sidebar слева -->
 	<td valign="top" class="left-chapters">
 	<ul id="leftchapters">
-		<li><a href="#">Бороды</a></li>
+    <!-- здескатегории -->
+    {% if cat_selected == 0 %}
+        <li class="selected">Все категории</li> <!-- если селект==0 то кнопка не активна-->
+    {% else %}
+        <li><a href="{% url 'home' %}">Все категории</a></li><!-- если селект не 0. то кнопка активна -->
+    {% endif %}
+    <!-- здесь перебираем все категории -->
+    {% for c in cats %}
+         {% if c.pk == cat_selected %}
+             <li class="selected">{{c.name}}</li>
+         {% else %}
+             <li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
+         {% endif %}
+    {% endfor %}
+		<!--<li><a href="#">Бороды</a></li>
 		<li><a href="#">Усы</a></li>
-		<li><a href="#">Шевелюры</a></li>
+		<li><a href="#">Шевелюры</a></li> -->
 		<li class="share">
 		<p>Наш канал</p>
 		<a class="share-yt" href="#" target="_blank" rel="nofollow"></a>
@@ -58,7 +72,7 @@
 <!-- подвал -->
 <tr><td valign=top>
 	<div id="footer">
-		<p>&copy; 2023 на Коваленко Александра Васильевича ссылаться строго запрещено! Он ни при чем.</p>
+		<p>&copy; 2023 Hа Коваленко Александра Васильевича ссылаться строго запрещено! Он ни при чем.</p>
 	</div>
 </td></tr></table>
 <!-- Конец подвала -->
