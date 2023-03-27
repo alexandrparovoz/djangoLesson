@@ -1,6 +1,11 @@
-from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404
+
+
 from .models import *
+from .forms import AddPostForm
+
 
 
 def index(request):
@@ -17,22 +22,46 @@ def index(request):
 
 
 def about(request):
-    return render(request, 'barber/about.html')
+    contact_list = Barber.objects.all()
+    paginator = Paginator(contact_list, 5)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'barber/about.html', {'page_obj': page_obj})
 
 
 def addpage(request):
-    return HttpResponse("Добавление статьи")
+    if request.method == 'POST':  # если это пост запрос(юзер отправил данные)
+        form = AddPostForm(request.POST, request.FILES) # то отдаeм их переменной form(заполненные)
+        if form.is_valid():
+            try:
+                Barber.objects.create(**form.cleaned_data)# если все хорошо, то в БД запишутся данные  от юзера
+                return redirect('home')
+            except:
+                form.add_error(None, 'Ошибка добавления данных')
+
+    else:
+        form = AddPostForm() # но если это первый показ формы(пусто) то и форма пуста
+    return render(request, 'barber/addpage.html', {'form': form})
 
 
 def contact(request):
     return HttpResponse("Обратная связь")
 
+def registration(request):
+    return HttpResponse("Регистрация")
 
 def login(request):
     return HttpResponse("Авторизация")
 
 def show_post(request, post_id):
-    return HttpResponse(f"Отображение статьи с id = {post_id}")
+    post = get_object_or_404(Barber, pk=post_id) # функция get_-- работает, если нет искомого id
+
+    context = {
+        'post': post,
+        'cat_selected': 1,
+    }
+    return render(request, 'barber/post.html', context=context)
 
 def show_category(request, cat_id):
     posts = Barber.objects.filter(cat_id=cat_id)
@@ -49,11 +78,9 @@ def show_category(request, cat_id):
     return render(request, 'barber/index.html', context=context)
     #return HttpResponse(f'<h2>Это страница категорий c id ={cat_id}</h2>')
 
-# def category(request, catid):
-#     return HttpResponse(f'<h2>Это страница категорий</h2>{catid}</p>')
 
 # def archive(request, year):
-#     if int(year) > 2022:
+#     if int(year) > 2023:
 #         return redirect('home', permanent=True)                        #raise Http404
 #     # if request.GET:
 #     #     print(request.GET)

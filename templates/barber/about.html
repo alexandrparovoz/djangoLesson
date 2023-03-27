@@ -1,6 +1,20 @@
-{% extends 'barber/base3.html' %}
+{% extends 'barber/base.html' %}
 {% block title %}О нас{%  endblock %}
 
 {%  block content %}
 <h3>Что то о всехxx нас!</h3>
+    {% for contact in page_obj %}
+    <p>{{ contact }}</p>
+    {% endfor %}
+
+    <nav class="list-pages">
+    <ul>
+        {% for p in page_obj.paginator.page_range %}
+
+        <li class="page-num">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
 {%  endblock %}
