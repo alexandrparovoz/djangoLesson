@@ -1,0 +1,11 @@
+{% extends 'barber/base.html' %}
+{%  block title %}Удалить статью{% endblock %}
+
+{% block content %}
+
+<h1>Удаление статьи</h1>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Удалить пост</button>
+</form>
+{% endblock %}

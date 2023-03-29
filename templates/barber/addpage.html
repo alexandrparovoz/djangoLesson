@@ -4,7 +4,7 @@
 {% block content %}
     <div class="form-error">{{ form.non_field_errors }}</div> <!-- для вывода ошибки валидации -->
     <h2>Страница добавления</h2>
-    <!-- спецформа в HTML  для несвязанных таблиц -->
+    <!-- форма в HTML  для добавления данных с методом POST -->
     <!-- через атрибут action связываемся через адрес страницы с функцией-->
     <form action="{% url 'add_page' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}  <!--защита от злых людей -->

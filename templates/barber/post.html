@@ -10,4 +10,5 @@
 {% endif %}
 
 {{post.content}}
+    <p class="link-read-post"><a href="{% url 'delete_post' post.id %}">Удалить пост</a></p>
 {% endblock %}
