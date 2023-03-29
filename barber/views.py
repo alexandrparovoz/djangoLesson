@@ -95,6 +95,8 @@ class DeletePost(DeleteView):
     def get_success_url(self):
         return reverse_lazy('home')
 
+def barber_gallery(request):
+    return render(request, 'barber/gallery.html')
 
 def  pageNotFound(request, exception):
     return HttpResponseNotFound(f'<h2>Этa страница не найдена</h2>')
